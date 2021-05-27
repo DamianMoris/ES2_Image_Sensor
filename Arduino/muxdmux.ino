@@ -1,19 +1,31 @@
   int Row[] = {9,10,11,12};
   int Kol[] = {5,6,7,8};
-  int output =0;  
+  float output =0;
+  //float muxout =0;  
 void setup() {
 
 // place the digital pins in a array
 
 pinMode (Row[0], OUTPUT);
+digitalWrite(Row[0],LOW);
 pinMode (Row[1], OUTPUT);
+digitalWrite(Row[1],LOW);
 pinMode (Row[2], OUTPUT);
+digitalWrite(Row[2],LOW);
 pinMode (Row[3], OUTPUT);
+digitalWrite(Row[3],LOW);
 
 pinMode (Kol[0], OUTPUT);
+digitalWrite(Kol[0],LOW);
 pinMode (Kol[1], OUTPUT);
+digitalWrite(Kol[1],LOW);
 pinMode (Kol[2], OUTPUT);
+digitalWrite(Kol[2],LOW);
 pinMode (Kol[3], OUTPUT);
+digitalWrite(Kol[3],LOW);
+pinMode (A0, INPUT_PULLUP);
+pinMode(A1,INPUT_PULLUP);
+//pinMode  (A0, INPUT);
 
 //pinMode (output, INPUT); // when output is connected delete comments
     // put your setup code here, to run once:
@@ -38,6 +50,7 @@ void BinaryOut(byte number, int pins[])
 
 void loop() 
 {
+  Serial.print("---------------------------------start-------------------------------\n");
   for (byte binrow =0;binrow<=15; binrow++)
     { 
       BinaryOut(binrow,Row);
@@ -45,11 +58,17 @@ void loop()
       {
         BinaryOut(binkol,Kol);
         //A0 for output read on jkol
-        //output = analogRead(A0);
-        //Serial.print(output);
-        //Serial.print("\t");
-        delay(500); // time of switch betwin photosensors
+        output = analogRead(A0);
+        muxout = analogRead(A1);
+        float number = (output*5.0)/1024;
+        //float muxnum = (muxout*5.0)/1024;
+        Serial.print(number);
+        //Serial.print(" ");
+        //Serial.print(muxnum);
+        Serial.print("\t");
+        delay(10); // time 100 for eye of switch betwin photothransistors
       }
-    //Serial.print("\n"); 
+    Serial.print("\n"); 
     }  
+  Serial.print("---------------------------------end-------------------------------\n");
 }
